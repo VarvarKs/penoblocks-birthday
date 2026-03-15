@@ -1,7 +1,8 @@
 (function () {
-    const PRICE_PER_BLOCK = 500;
+    const PRICE_PER_BLOCK = 400;
     const MAX_BLOCKS = 60;
     const MIN_BLOCKS = 1;
+    const TOTAL_BLOCKS = 180;
   
     const wallEl = document.getElementById("wall");
     const countEl = document.getElementById("blockCount");
@@ -15,6 +16,23 @@
     const paymentLinkEl = document.getElementById("paymentLink");
   
     let currentBlocks = MIN_BLOCKS;
+    let BUILT_BLOCKS = 0;
+  
+    const wallSection = document.querySelector(".wall-section");
+    const progressEl = document.createElement("p");
+    progressEl.className = "progress-text";
+    progressEl.setAttribute("aria-live", "polite");
+    if (wallSection) {
+      const wrapper = wallSection.querySelector(".wall-visual-wrapper");
+      wallSection.insertBefore(progressEl, wrapper);
+    }
+  
+    const confirmPaidBtn = document.createElement("button");
+    confirmPaidBtn.className = "btn payment-btn";
+    confirmPaidBtn.type = "button";
+    confirmPaidBtn.textContent = "Я перевёл";
+    confirmPaidBtn.id = "confirmPaidBtn";
+    paymentLinkEl.parentNode.insertBefore(confirmPaidBtn, paymentLinkEl.nextSibling);
   
     function formatPrice(value) {
       return value.toLocaleString("ru-RU") + " ₽";
@@ -33,24 +51,29 @@
       plusBtn.disabled = currentBlocks >= MAX_BLOCKS;
     }
   
+    function updateProgressDisplay() {
+      if (progressEl) {
+        progressEl.textContent = `Уже построено ${BUILT_BLOCKS} из ${TOTAL_BLOCKS} блоков`;
+      }
+    }
+
     function updateWall() {
       wallEl.innerHTML = "";
-  
-      if (currentBlocks > 0) {
+
+      if (BUILT_BLOCKS > 0) {
         wallEl.classList.add("has-blocks");
       } else {
         wallEl.classList.remove("has-blocks");
       }
-  
-      for (let i = 0; i < currentBlocks; i++) {
+
+      for (let i = 0; i < BUILT_BLOCKS; i++) {
         const block = document.createElement("div");
         block.className = "block";
-  
-        // Несколько "акцентных" блоков
+
         if ((i + 3) % 7 === 0 || (i + 1) % 11 === 0) {
           block.classList.add("accent");
         }
-  
+
         wallEl.appendChild(block);
       }
     }
@@ -60,7 +83,6 @@
       currentBlocks = clamped;
       updateControls();
       updatePriceDisplay();
-      updateWall();
     }
   
     minusBtn.addEventListener("click", function () {
@@ -80,16 +102,31 @@
   
     giftBtn.addEventListener("click", function () {
       thankYouEl.classList.remove("hidden");
-  
+
       const text = `Перевести за ${currentBlocks} блок(а/ов) ≈ ${formatPrice(
         currentBlocks * PRICE_PER_BLOCK
       )}`;
       paymentLinkEl.textContent = text;
-  
-      // Заглушка: остаёмся на текущей странице
-      paymentLinkEl.href = "#";
+      const paymentUrl =
+        typeof window.PAYMENT_URL === "string" && window.PAYMENT_URL.trim()
+          ? window.PAYMENT_URL.trim()
+          : "#";
+      paymentLinkEl.href = paymentUrl;
+
+      confirmPaidBtn.disabled = false;
+    });
+
+    confirmPaidBtn.addEventListener("click", function () {
+      const toAdd = Math.min(currentBlocks, TOTAL_BLOCKS - BUILT_BLOCKS);
+      if (toAdd <= 0) return;
+      BUILT_BLOCKS += toAdd;
+      confirmPaidBtn.disabled = true;
+      updateProgressDisplay();
+      updateWall();
     });
   
     // Инициализация
     setBlocks(MIN_BLOCKS);
+    updateProgressDisplay();
+    updateWall();
   })();
