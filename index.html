@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Подарок: пеноблоки для стен</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="page">
+    <header class="header">
+      <h1 class="title">Подарок на день рождения: пеноблоки вместо букета</h1>
+      <p class="subtitle">
+        У меня есть квартира без стен, зато с большими планами.
+        Вместо цветов, сладостей и бесполезных вещиц —
+        можно подарить очень приземлённый, но тёплый подарок:
+        пару пеноблоков в будущую стену.
+      </p>
+    </header>
+
+    <main class="content">
+      <section class="wall-section">
+        <h2 class="section-title">Моя будущая стенка</h2>
+        <p class="section-text">
+          Представь, что каждый маленький блок здесь — это часть твоего подарка.
+          Чем больше блоков, тем ближе настоящие стены.
+        </p>
+
+        <div class="wall-visual-wrapper">
+          <div id="wall" class="wall"></div>
+        </div>
+      </section>
+
+      <section class="control-section">
+        <h2 class="section-title">Сколько пеноблоков подарить?</h2>
+
+        <div class="controls">
+          <div class="counter">
+            <button id="minusBtn" class="btn counter-btn" type="button">–</button>
+            <span id="blockCount" class="counter-value">1</span>
+            <button id="plusBtn" class="btn counter-btn" type="button">+</button>
+          </div>
+
+          <div class="slider-wrapper">
+            <input
+              id="blockSlider"
+              type="range"
+              min="1"
+              max="60"
+              value="1"
+            />
+            <div class="slider-labels">
+              <span>1</span>
+              <span>60</span>
+            </div>
+          </div>
+
+          <div class="summary">
+            <div class="summary-row">
+              <span>Цена одного блока:</span>
+              <span id="blockPrice">500 ₽</span>
+            </div>
+            <div class="summary-row summary-row-total">
+              <span>Итого за блоки:</span>
+              <span id="totalPrice">500 ₽</span>
+            </div>
+          </div>
+        </div>
+
+        <button id="giftBtn" class="btn gift-btn" type="button">
+          Подарить пеноблоки
+        </button>
+
+        <div id="thankYou" class="thank-you hidden">
+          <p class="thank-you-text">
+            Спасибо! Ты только что помог(ла) моей будущей стене стать реальнее.
+            Представь, как твой пеноблок тихо стоит в ряду и держит на себе кусочек моего уюта.
+          </p>
+          <a
+            id="paymentLink"
+            class="btn payment-btn"
+            href="#"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Перейти к переводу
+          </a>
+          <p class="note">
+            Ссылка-заглушка. Тут будет удобный способ перевода: карта, СБП или
+            что-нибудь ещё дружелюбное.
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>
+        Сделано с любовью, самоиронией и лёгким строительным вайбом.
+      </p>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
