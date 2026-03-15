@@ -472,7 +472,66 @@
   .hidden {
     display: none;
   }
-  
+
+  /* Этапы строительства: прогресс по помещениям */
+  .stages-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .stage-item {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.92rem;
+    color: var(--text-muted);
+  }
+
+  .stage-item .stage-label {
+    min-width: 140px;
+  }
+
+  .stage-item.stage-locked .stage-label,
+  .stage-item.stage-locked .stage-progress-wrap {
+    opacity: 0.5;
+  }
+
+  .stage-progress-wrap {
+    flex: 1;
+    min-width: 80px;
+    max-width: 200px;
+    height: 8px;
+    border-radius: var(--radius-pill);
+    background: rgba(126, 114, 100, 0.2);
+    overflow: hidden;
+  }
+
+  .stage-progress-fill {
+    height: 100%;
+    border-radius: var(--radius-pill);
+    background: linear-gradient(
+      90deg,
+      var(--accent-green-soft),
+      var(--accent-green)
+    );
+    transition: width var(--transition);
+    width: 0;
+  }
+
+  .stage-item.stage-done .stage-progress-fill {
+    background: var(--accent-green);
+  }
+
+  .stage-item .stage-status {
+    flex-shrink: 0;
+    color: var(--accent-green);
+  }
+
   /* Footer */
   
   .footer {
